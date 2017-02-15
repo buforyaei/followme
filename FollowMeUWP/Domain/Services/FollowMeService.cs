@@ -29,5 +29,10 @@ namespace Domain.Services
         {
             return await GetWebServiceData(() => _followMeWebService.PostDriver(driver));
         }
+
+        public async Task<WebResult<Driver>> DeleteDriverAsync(int code)
+        {
+            return await GetWebServiceData(() => _followMeWebService.DeleteDriver(code));
+        }
     }
 }

@@ -35,5 +35,10 @@ namespace FollowMe.Pages
         {
             Application.Current.Exit();
         }
+
+        private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            ViewModel.ChangeButtonText();
+        }
     }
 }

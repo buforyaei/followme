@@ -5,6 +5,7 @@
         public static string BaseAddress = "http://followmeweb.azurewebsites.net";
         public static string ApiDrivers = "/api/drivers/";
 
-        public static string DeffaultCodeText = "get code";
+        public static string DeffaultRedButtonText = "get code";
+        public static string SecondRedButtonText = "host road";
     }
 }

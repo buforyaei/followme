@@ -15,6 +15,7 @@ namespace FollowMe.ViewModels
     public class StartViewModel : FollowMeViewModelBase
     {
         private string _codeText;
+        private string _redButtonText;
 
         public StartViewModel(IDialogService dialogService,
             IFollowMeService followMeService,
@@ -35,6 +36,18 @@ namespace FollowMe.ViewModels
             set { Set(ref _codeText, value); }
         }
 
+        public string RedButtonText
+        {
+            get { return _redButtonText; }
+            set { Set(ref _redButtonText, value); }
+        }
+
+        public void ChangeButtonText()
+        {
+            if (RedButtonText == FollowMeConsts.DeffaultRedButtonText) return;
+            RedButtonText = FollowMeConsts.DeffaultRedButtonText;
+        }
+
         private void InitializeCommands()
         {
             LoadCmd = new RelayCommand(Load);
@@ -44,7 +57,7 @@ namespace FollowMe.ViewModels
 
         private void Load()
         {
-            CodeText = FollowMeConsts.DeffaultCodeText;
+            RedButtonText = FollowMeConsts.DeffaultRedButtonText;
         }
 
         private async void Follow()
@@ -58,7 +71,7 @@ namespace FollowMe.ViewModels
             catch
             {
                 IsWorking = false;
-                await DialogService.ShowMessage("Code is not corrected", "Error");
+                await DialogService.ShowMessage("Code is not corrected.", "Error");
                 return;
             }
             var driver = await FollowMeService.GetDriverAsync(parsedCode);
@@ -71,7 +84,7 @@ namespace FollowMe.ViewModels
             if (driver.Result == null)
             {
                 IsWorking = false;
-                await DialogService.ShowMessage("Code is not corrected", "Error");
+                await DialogService.ShowMessage("Code is not corrected.", "Error");
                 return;
             }
             NavigationService.NavigateTo("Follow");
@@ -81,18 +94,26 @@ namespace FollowMe.ViewModels
         private async void GetCode()
         {
             IsWorking = true;
-            var code = await FollowMeService.GetCodeAsync();
-            if (code.WebServiceStatus != WebServiceStatus.Success)
+            if (RedButtonText == FollowMeConsts.DeffaultRedButtonText)
             {
-                ShowWebResultCommunicate(code.WebServiceStatus);
-                CodeText = FollowMeConsts.DeffaultCodeText;
-                return;
+                var code = await FollowMeService.GetCodeAsync();
+                if (code.WebServiceStatus != WebServiceStatus.Success)
+                {
+                    ShowWebResultCommunicate(code.WebServiceStatus);
+                    CodeText = string.Empty;
+                    RedButtonText = FollowMeConsts.DeffaultRedButtonText;
+                    return;
+                }
+                if (code.Result?.Code != null)
+                {
+                    CodeText = code.Result.Code.ToString();
+                    RedButtonText = FollowMeConsts.SecondRedButtonText;
+                }
             }
-            if (code.Result?.Code != null)
+            else
             {
-                CodeText = code.Result.Code.ToString();
+                ///host navigate to page map
             }
-
             IsWorking = false;
         }
     }

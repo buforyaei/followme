@@ -21,32 +21,53 @@
                 TextWrapping="NoWrap"
                 VerticalAlignment="Bottom"
                 FontSize="20"
+                Text="{Binding CodeText, Mode=TwoWay}"
+                TextAlignment="Center"
                 Width="150"
-                PlaceholderText="insert code" Style="{StaticResource TextBoxStyle}"
+                TextChanged="TextBox_OnTextChanged"
+                PlaceholderText="insert code"
+                Style="{StaticResource TextBoxStyle}"
                 Visibility="{Binding IsWorking,
                     Converter={StaticResource BooleanToOppositeVisibilityConverter}}" />
             <Button
                 Grid.Row="1"
                 HorizontalAlignment="Center"
-                Background="DarkSlateBlue"
+                Background="Transparent"
                 Width="150"
                 Command="{Binding FollowCmd}"
-                Content="follow"
                 Style="{StaticResource ButtonStyle}"
                 Visibility="{Binding IsWorking,
-                    Converter={StaticResource BooleanToOppositeVisibilityConverter}}" />
+                    Converter={StaticResource BooleanToOppositeVisibilityConverter}}">
+                <Grid>
+                    <Ellipse Height="110"  Width="110" Fill="DarkSlateBlue" Opacity="0.8" />
+                    <TextBlock
+                        Text="follow"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0" />
+                </Grid>
+            </Button>
             <Button
                 Grid.Row="2"
-                Style="{StaticResource ButtonStyle}"
-                Content="{Binding CodeText}"
-                VerticalAlignment="Bottom"
                 HorizontalAlignment="Center"
-                Background="Firebrick"
-                Command="{Binding GetCodeCmd}"
-                Width="150"
+                VerticalAlignment="Bottom"
+                Background="Transparent"
+                Style="{StaticResource ButtonStyle}"
                 Margin="16,10,16,150"
+                Command="{Binding GetCodeCmd}"
                 Visibility="{Binding IsWorking,
-                    Converter={StaticResource BooleanToOppositeVisibilityConverter}}" />
+                    Converter={StaticResource BooleanToOppositeVisibilityConverter}}">
+                <Grid>
+                    <Ellipse Height="110"  Width="110" Fill="Firebrick" Opacity="0.8" />
+                    <TextBlock
+                        Text="{Binding RedButtonText, Mode=TwoWay}"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0" />
+                </Grid>
+            </Button>
         </Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
             <ProgressRing

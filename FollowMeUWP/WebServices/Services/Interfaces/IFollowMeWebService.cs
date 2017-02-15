@@ -10,5 +10,7 @@ namespace WebServices.Services.Interfaces
         Task<Driver> GetDriver(int code);
 
         Task<Driver> PostDriver(Driver driver);
+
+        Task<Driver> DeleteDriver(int code);
     }
 }

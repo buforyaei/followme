@@ -30,5 +30,11 @@ namespace WebServices.Services
             request.AddJsonBody(driver);
             return await CallAsync<Driver>(request);
         }
+
+        public async Task<Driver> DeleteDriver(int code)
+        {
+            var request = new RestRequest(FollowMeConsts.ApiDrivers + "/?code=" + code, Method.DELETE);
+            return await CallAsync<Driver>(request);
+        }
     }
 }

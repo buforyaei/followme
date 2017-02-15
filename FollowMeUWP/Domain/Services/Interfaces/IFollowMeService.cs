@@ -12,5 +12,7 @@ namespace Domain.Services.Interfaces
         Task<WebResult<Driver>> GetDriverAsync(int code);
 
         Task<WebResult<Driver>> PostDriverAsync(Driver driver);
+
+        Task<WebResult<Driver>> DeleteDriverAsync(int code);
     }
 }
