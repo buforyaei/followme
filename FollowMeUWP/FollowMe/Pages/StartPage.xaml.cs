@@ -31,7 +31,7 @@ namespace FollowMe.Pages
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
         }
 
-        private void OnBackRequested(object sender, BackRequestedEventArgs backRequestedEventArgs)
+        private static void OnBackRequested(object sender, BackRequestedEventArgs backRequestedEventArgs)
         {
             Application.Current.Exit();
         }

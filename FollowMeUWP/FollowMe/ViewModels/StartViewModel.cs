@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Core;
 using Domain.Model;
+using Domain.Services;
 using Domain.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -102,6 +103,7 @@ namespace FollowMe.ViewModels
                     ShowWebResultCommunicate(code.WebServiceStatus);
                     CodeText = string.Empty;
                     RedButtonText = FollowMeConsts.DeffaultRedButtonText;
+                    IsWorking = false;
                     return;
                 }
                 if (code.Result?.Code != null)
@@ -112,7 +114,8 @@ namespace FollowMe.ViewModels
             }
             else
             {
-                ///host navigate to page map
+                AppSession.Current.Code = int.Parse(CodeText);
+                NavigationService.NavigateTo("Follow");
             }
             IsWorking = false;
         }

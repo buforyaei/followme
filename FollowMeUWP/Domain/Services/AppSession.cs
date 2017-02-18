@@ -13,6 +13,8 @@ namespace Domain.Services
 
         public static AppSession Current => Lazy.Value;
 
+        public int Code { get; set; }
+
         public void Cleanup()
         {
         }

@@ -1,5 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using Domain.Services.Interfaces;
 using GalaSoft.MvvmLight.Command;
@@ -29,6 +32,23 @@ namespace FollowMe.ViewModels
             set { Set(ref _map, value); }
         }
 
+        public async void AskToGoBack()
+        {
+            var messageDialog = new MessageDialog(
+               $"Are you sure you want to quit drive?", "Warning");
+            var noBtn = new UICommand("No");
+            var yesBtn = new UICommand("Yes")
+            {
+                Invoked = command =>
+                {
+                    GoBack();
+                }
+            };
+            messageDialog.Commands.Add(yesBtn);
+            messageDialog.Commands.Add(noBtn);
+            await messageDialog.ShowAsync();
+        }
+
         public void GoBack()
         {
             NavigationService.GoBack();
@@ -44,18 +64,18 @@ namespace FollowMe.ViewModels
         private void Load(MapControl map)
         {
             Map = map;
-            Map.ZoomLevel = 10;
+            Map.ZoomLevel = 4;
         }
 
         private void ZoomMore()
         {
-            if (Map.ZoomLevel == Map.MaxZoomLevel) return;
+            if (Map.ZoomLevel >= Map.MaxZoomLevel) return;
             Map.ZoomLevel += 1;
         }
 
         private void ZoomLess()
         {
-            if (Map.ZoomLevel == Map.MinZoomLevel) return;
+            if (Map.ZoomLevel >= Map.MinZoomLevel) return;
             Map.ZoomLevel -= 1;
         }
     }

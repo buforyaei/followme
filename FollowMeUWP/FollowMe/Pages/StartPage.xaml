@@ -30,6 +30,7 @@
                 Visibility="{Binding IsWorking,
                     Converter={StaticResource BooleanToOppositeVisibilityConverter}}" />
             <Button
+                Name="FollowButton"
                 Grid.Row="1"
                 HorizontalAlignment="Center"
                 Background="Transparent"
